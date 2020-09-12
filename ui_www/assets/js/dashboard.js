@@ -1,7 +1,7 @@
 
+var bui = new Bootstrap();
 
 var Dashboard  = function () {
-
     /**
     **/
     this.title = function ( content) {
@@ -17,21 +17,29 @@ var Dashboard  = function () {
 		return el;
 	}
 
+	this.
+
     /**
     **/
     this.sidebar = function( sidebars, idx) {
         var sbar = document.getElementById('sidebar');
         sbar.innerHTML = '';
-        for (i=0; i < sidebars.length; i++) {
-            var lx = document.createElement('li');
-            lx.setAttribute('id', 'sidebar'+i);
-            lx.innerHTML = 'Sidebar '+ i;
+        bui.balert('BootObject');
+        for (i=0; i < sidebars.length-1; i++) {
+            var lx = bui.createElement('li', 'sidebar'+i);
+                /*Add Icon First*/
+                var ix = document.createElement('i');
+                ix.setAttribute('class', 'tim-icons icon-atom');
+            lx.appendChild(ix);
 
-            var ix = document.createElement('i');
-            ix.setAttribute('class', 'tim-icons icon-atom');
-            lx.appenChild(ix);
+                /*Add Navigation Elm*/
+                var px = bui.createElement('p', 'sbartext'+i);
+                px.innerHTML = 'Sidebar '+ i;
 
-            sbar.appenChild(lx);
+            lx.appendChild(px);
+
+
+            sbar.appendChild(lx);
         }
 
         return sbar;
