@@ -20,6 +20,7 @@ Modified by Navendu Sinha
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title id="title">
+      {{ app.title }}
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
@@ -36,9 +37,11 @@ Modified by Navendu Sinha
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
   <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assets/js/plugins/vue.js"></script>
   <!--  Google Maps Plugin    -->
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Place this tag in your head or just before your close body tag. >
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script-->
+
   <!-- Chart JS -->
   <script src="assets/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
@@ -60,7 +63,7 @@ Modified by Navendu Sinha
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
     -->
       <div class="sidebar-wrapper">
-        <div class="logo" id="sidebar.logo">
+        <div class="logo" id="sidebar-logo">
           <a href="javascript:void(0)" class="simple-text logo-mini">
             CT
           </a>

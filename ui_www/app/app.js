@@ -15,6 +15,7 @@ function init() {
 
 
 function renderView1() {
+
 }
 
 function renderView2() {
