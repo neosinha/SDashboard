@@ -3,12 +3,22 @@
 var d = new Dashboard();
 
 function init() {
-    alert('App Init');
+    //alert('App Init');
     d.title('New App');
 
     var sbars = new Array();
-    sbars.push( {'icon' : '', 'content' : 'Info', } );
-    sbars.push( {'icon' : '', 'content' : 'Info2'} );
-    sbars.push( {'icon' : '', 'content' : 'Info3'} );
-    d.sidebar(sbars, 'sidebar')
+    sbars.push( {'icon' : 'tim-icons icon-app', 'content' : 'Info1', 'onclick' : 'renderView1();' } );
+    sbars.push( {'icon' : 'glyphicon glyphicon-cog', 'content' : 'Info2', 'onclick' : 'renderView2();' } );
+    sbars.push( {'icon' : 'tim-icons icon-app', 'content' : 'Info3', 'onclick' : 'renderView3();' } );
+    d.sidebar(sbars, 'sidebar');
+}
+
+
+function renderView1() {
+}
+
+function renderView2() {
+}
+
+function renderView3() {
 }

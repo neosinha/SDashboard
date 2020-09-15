@@ -562,6 +562,8 @@ var Bootstrap  = function () {
 			} else {
 				button.setAttribute('class', 'btn btn-lg btn-block btn-basic'); 
 			}
+
+
 			
 			
 			
