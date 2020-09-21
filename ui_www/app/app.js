@@ -11,15 +11,13 @@ function init() {
     sbars.push( {'icon' : 'glyphicon glyphicon-cog', 'content' : 'Info2', 'onclick' : 'renderView2();' } );
     sbars.push( {'icon' : 'tim-icons icon-app', 'content' : 'Info3', 'onclick' : 'renderView3();' } );
     d.sidebar(sbars, 'sidebar');
+
+
 }
 
 
-function renderView1() {
 
-}
 
-function renderView2() {
-}
 
-function renderView3() {
-}
+
+

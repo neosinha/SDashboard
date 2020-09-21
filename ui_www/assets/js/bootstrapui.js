@@ -103,9 +103,8 @@ var Bootstrap  = function () {
 		return modalel;
 	}
 	
-	
 	this.button = function (id, name, onclick) {
-		el = this.createElement('button', id);
+		var el = this.createElement('button', id);
 		el.setAttribute('onclick', onclick);
 		
 		if (typeof name == "string") {
@@ -115,24 +114,116 @@ var Bootstrap  = function () {
 		}
 		return el;
 	};
-	
+
+	/***
+	***/
+	this.buttonGroup = function (id, buttonArray) {
+         var divg = this.createElement('div', id);
+         divg.setAttribute('class', 'btn-group');
+         divg.setAttribute('role', 'group');
+         divg.setAttribute('aria-label', '...');
+
+         for (i=0; i < buttonArray.length; i++) {
+            var btnd = buttonArray[i];
+            //console.log("ButtonGroup: "+ JSON.stringify(btnd) );
+            var btnobj = this.button(id+i, btnd['name'],
+                                    btnd['onclick']);
+            btnobj.setAttribute('class',  'btn btn-default');
+            divg.appendChild(btnobj);
+
+         }
+
+         return divg;
+
+	}
+
+	/***
+	***/
+	this.buttonGroupJustified = function (id, buttonArray) {
+         var divg = this.createElement('div', id);
+         divg.setAttribute('class', 'btn-group btn-group-justified');
+         divg.setAttribute('role', 'group');
+         divg.setAttribute('aria-label', '...');
+
+         for (i=0; i < buttonArray.length; i++) {
+            var btnd = buttonArray[i];
+            //console.log("ButtonGroup: "+ JSON.stringify(btnd) );
+            var btnobj = this.button(id+i, btnd['name'],
+                                    btnd['onclick']);
+            btnobj.setAttribute('class',  'btn btn-default');
+            divg.appendChild(btnobj);
+
+         }
+
+         return divg;
+
+	}
+
+
+	this.vbuttonGroup = function (id,  buttonArray) {
+         var divg = this.createElement('div', id);
+         divg.setAttribute('class', 'btn-group-vertical');
+         divg.setAttribute('role', 'group');
+         divg.setAttribute('aria-label', '...');
+
+         for (i=0; i < buttonArray.length; i++) {
+            var btnd = buttonArray[i];
+            console.log("ButtonGroup: "+ JSON.stringify(btnd) );
+            var btnobj = this.button(id+i, btnd['name'],
+                                    btnd['onclick']);
+
+            btnobj.setAttribute('class',  'btn btn-default');
+            if ('class' in btnd) {
+                btnobj.setAttribute('class', 'btn btn-'+btnd['class']);
+            }
+            divg.appendChild(btnobj);
+
+         }
+
+         return divg;
+
+	}
+
+	this.progress = function (id, stype, percent, message) {
+	    var prog = this.createElement('div', id);
+	    prog.setAttribute('class', 'progress');
+
+	    var pbar = this.createElement('div', 'prog-'+id);
+	    if (stype) {
+	        pbar.setAttribute('class', 'progress-bar progress-bar-'+stype);
+	    } else {
+	       pbar.setAttribute('class', 'progress-bar progress-bar-success');
+	    }
+	    pbar.innerHTML = message;
+
+        pbar.setAttribute('style', 'width:'+percent+'%');
+        pbar.setAttribute('role', 'progressbar');
+	   // <div class="progress">
+       //     <div class="progress-bar progress-bar-success" role="progressbar" style="width:40%">
+       //     Free Space
+       //  <
+        prog.appendChild(pbar);
+
+	    return prog;
+	}
+
 	
 	this.createPanels = function (id, panelArr) {
 		
-		pgroup = this.createElement('div', id);
+		var pgroup = this.createElement('div', id);
 		pgroup.setAttribute('class', 'panel-group');
 		
 		for (i=0; i < panelArr.length; i++) {
-			panel = this.createElement('div', id+i);
-			panelEl = panelArr[i];
+			var panel = this.createElement('div', id+i);
+			var panelEl = panelArr[i];
 			if (panelEl['type']) {
 				panel.setAttribute('class', 'panel panel-'+panelEl['type']);
 			} else {
 				panel.setAttribute('class', 'panel panel-default');
 			}
 			if (panelEl['heading']) {
-				paneh = this.createElement('div', null);
-				panelh = this.createElement('div', null);
+				var paneh = this.createElement('div', null);
+				var panelh = this.createElement('div', null);
 				panelh.setAttribute('class', 'panel-heading');
 				if (typeof panelEl['heading'] == 'string') {
 					panelh.innerHTML = panelEl['heading']; 
@@ -142,7 +233,7 @@ var Bootstrap  = function () {
 				panel.appendChild(panelh);
 			}
 			
-			panelcontent = this.createElement('div', null);
+			var panelcontent = this.createElement('div', null);
 			panelcontent.setAttribute('class', 'panel-body');
 			if (typeof panelEl['content'] == 'string') {
 				panelcontent.innerHTML = panelEl['content']; 
@@ -175,7 +266,6 @@ var Bootstrap  = function () {
 				a.innerHTML = tab['name'];
 				a.setAttribute('data-toggle', 'tab');
 				a.setAttribute('href', '#tab'+id+i.toString());
-				//a.setAttribute('id', 'tab'+id+i.toString());
 				li.appendChild(a);
 				nav.appendChild(li); 
 			}
@@ -203,7 +293,56 @@ var Bootstrap  = function () {
 			navtabview.appendChild(tabview);
 		
 		 return navtabview; 
-	}; 
+	};
+
+	this.vtabs = function (id, style, tabs) {
+		navtabview = document.createElement('div');
+		navtabview.setAttribute('id', id);
+		navdiv = document.createElement('div');
+		navdiv.setAttribute('class', 'v-tabs-navigation');
+
+			nav = document.createElement('ul');
+			nav.setAttribute('class', 'nav nav-pills nav-stacked '+style);
+
+			for (i=0; i < tabs.length; i++) {
+				tab = tabs[i];
+				li = document.createElement('li');
+				if ( i == 0) {
+					li.setAttribute('class', 'active');
+				}
+				a = document.createElement('a');
+				a.innerHTML = tab['name'];
+				a.setAttribute('data-toggle', 'tab');
+				a.setAttribute('href', '#tab'+id+i.toString());
+				li.appendChild(a);
+				nav.appendChild(li);
+			}
+
+			navdiv.appendChild(nav);
+			navtabview.appendChild(navdiv);
+
+			tabview = document.createElement('div');
+			tabview.setAttribute('class', 'tab-content text-center');
+			tabview.setAttribute('id', 'tabview-'+id);
+
+			for (i=0; i < tabs.length; i++) {
+				tabpane = document.createElement('div');
+				tabpane.setAttribute('id', 'tab'+id+i.toString());
+				tab = tabs[i];
+				if (i ==0 ) {
+					tabpane.setAttribute('class', 'tab-pane active');
+				} else {
+					tabpane.setAttribute('class', 'tab-pane');
+				}
+
+				tabpane.appendChild(tab['content']);
+				tabview.appendChild(tabpane);
+			}
+			navtabview.appendChild(tabview);
+
+		 return navtabview;
+	};
+
 
 	this.table = function (id, classname, header, tabledata) {
 		var tbl = document.createElement('table');
@@ -213,12 +352,13 @@ var Bootstrap  = function () {
 		//header section
 		var thead = document.createElement('thead');
 		var tr = document.createElement('tr');
-		
+
 		for (idx = 0; idx < header.length; idx++) {
 			th = document.createElement('th');
 			th.innerHTML = header[idx]; 
 			tr.appendChild(th);
 		}
+		thead.setAttribute('class', 'tablehead-'+id);
 		thead.appendChild(tr);
 		tbl.appendChild(thead);
 		
@@ -230,17 +370,28 @@ var Bootstrap  = function () {
 			for (ridx= 0; ridx < rdata.length; ridx++) {
 				var td = document.createElement('td');
 				td.setAttribute('class', 'text-left');
-				td.innerHTML = rdata[ridx];
+				if (typeof rdata[ridx] == 'string') {
+	    			td.innerHTML = rdata[ridx];
+			    } else {
+				    td.appendChild(rdata[ridx]);
+			    }
+
+                tr.setAttribute('id', id+'-row'+idx);
 				tr.appendChild(td);
 			}
 			tbody.appendChild(tr);
+            //summary row
+			var str = document.createElement('tr');
+			str.setAttribute('id', idx+'-srow-'+idx);
+			//tbody.appendChild(str);
 		}
 		tbl.appendChild(tbody);
 		
 		return tbl; 
 	}; 
 	
-	
+
+
 	this.h1 = function(id, text, attributes) {
 		el = document.createElement('h1'); 
 		if (id)
@@ -422,7 +573,6 @@ var Bootstrap  = function () {
 	this.createForm = function (id, inputarray) {
 		form = document.createElement('form');
 		form.setAttribute('id', id);
-		
 		form.setAttribute('action', 'javascript:null');
 		
 		//txtformgroup = document.createElement('div');
@@ -444,33 +594,6 @@ var Bootstrap  = function () {
 		
 		return form; 
 	}; 
-	
-	this.createInlineForm = function (id, inputarray) {
-		form = document.createElement('form');
-		form.setAttribute('id', id);
-		form.setAttribute('class', 'form-inline');
-		form.setAttribute('action', 'javascript:null');
-		
-		//txtformgroup = document.createElement('div');
-		//txtformgroup.setAttribute('id', id+'div');
-		//txtformgroup.setAttribute('class', 'form-group');
-		
-		form.appendChild(this.br());
-		for (i=0; i < inputarray.length; i++) {
-			inputdef = inputarray[i]; 
-			idlx = id.toLowerCase()+i.toString();
-			if (inputdef['id']) {
-				idlx = inputdef['id'];
-			}
-			inpformel = this.createFormElement(idlx, inputdef);
-			form.appendChild(inpformel);
-		}
-		
-		//form.appendChild(txtformgroup);
-		
-		return form; 
-	}; 
-	
 	
 	
 
@@ -562,8 +685,6 @@ var Bootstrap  = function () {
 			} else {
 				button.setAttribute('class', 'btn btn-lg btn-block btn-basic'); 
 			}
-
-
 			
 			
 			
@@ -597,12 +718,12 @@ var Bootstrap  = function () {
 	};
 	
 	this.createListGroup = function(id, listFunction, listArr) {
-		lgroup = this.createElement('div', id);
+		var lgroup = this.createElement('div', id);
 		lgroup.setAttribute('class', 'list-group');
 		
 		for (i=0; i < listArr.length; i++) {
-			listEl = listArr[i]; 
-			ach = this.createElement('a', id+'_el'+i);
+			var listEl = listArr[i];
+			var ach = this.createElement('a', id+'_el'+i);
 			
 			if (typeof listEl['content'] == 'string') {
 				ach.innerHTML = listEl['content']; 
@@ -613,8 +734,8 @@ var Bootstrap  = function () {
 			
 			ach.innerHTML = listEl['content'];
 			ach.setAttribute('href', 'javascript:null');
-			if (ach['type']) {
-				ach.setAttribute('class', 'list-group-item '+ type);
+			if (listEl['type']) {
+				ach.setAttribute('class', 'list-group-item list-group-item-'+ listEl['type'] );
 			} else {
 				ach.setAttribute('class', 'list-group-item');
 			}
@@ -666,10 +787,10 @@ var Bootstrap  = function () {
 	
 	
 	this.createNotification = function(alerttype, msg) {
-		var div = this.createElement('div', null);
+		div = this.createElement('div', null);
 		div.setAttribute('class', 'alert alert-dismissible alert-'+alerttype);
 		
-		var a = this.createElement('a', null);
+		a = this.createElement('a', null);
 		a.setAttribute('href', 'javacript:null');
 		a.setAttribute('class', 'close');
 		a.setAttribute('data-dismiss', 'alert' );
@@ -685,7 +806,7 @@ var Bootstrap  = function () {
 	
 	
 	this.addSubViewById = function(parentViewid, elems) {
-		var pview = document.getElementById(parentViewid);
+		pview = document.getElementById(parentViewid);
 		view = this.addSubView(pview, elems);
 		return view;
 	}; 
@@ -728,12 +849,6 @@ var Bootstrap  = function () {
 	};
 	
 	
-	this.addRow = function (rowid) {
-		var div = this.createElement('div', rowid);
-		div.setAttribute('class', 'row');
-		
-		return div;
-	}
 	
 	
 	/**
@@ -803,8 +918,130 @@ var Bootstrap  = function () {
 		return divx; 
 	}; 
 	
-	
-	
+	/**
+	 * @method
+	 * @parameter id : 
+	 * @columdef : Array of column definitions
+	**/
+	this.row = function(rowid, columndef) {
+		var divx = document.createElement('div');
+		divx.setAttribute('id', rowid);
+		divx.setAttribute('class', 'row');
+		
+		for (i=0; i < columndef.length; i++) {
+			var col = columndef[i]; 
+			var divcol = document.createElement('div');
+			divcol.setAttribute('class', col);
+			divcol.setAttribute('id', rowid+'-'+'col'+i);
+			divx.appendChild(divcol);
+		}
+		//class="carousel slide" data-ride="carousel"
+		return divx;
+	}; 
+
+
+	/**
+	* @method
+	*
+	**/
+	//<div class="panel-group" id="accordion">
+	this.accordian = function (id, panelArr) {
+	    var pgroup = document.createElement('div');
+	    pgroup.setAttribute('id', id);
+	    pgroup.setAttribute('class', 'panel-group');
+
+        for (idx= 0; idx < panelArr.length; idx++) {
+            var pobj = panelArr[idx];
+            var phdr  = pobj['heading'];
+            var pbdy  = pobj['body'];
+
+            var ahdr = document.createElement('div');
+            ahdr.setAttribute('class', 'panel panel-default');
+
+                var aahdr = document.createElement('div');
+                aahdr.setAttribute('class', 'panel-heading');
+
+                var hdrx = document.createElement('h4');
+                hdrx.setAttribute('class', 'panel-title');
+                var ahdrx = document.createElement('a');
+                    ahdrx.setAttribute('data-toggle', 'collapse');
+                    ahdrx.setAttribute('data-parent', id);
+                    ahdrx.setAttribute('href', '#cheader-'+id+'-'+idx);
+
+                    if (typeof phdr == 'string') {
+                           ahdrx.innerHTML = phdr;
+			        } else {
+                           ahdrx.appendChild(phdr);
+			        }
+                hdrx.appendChild(ahdrx);
+               ahdr.appendChild(hdrx);
+
+            pgroup.appendChild(ahdr);
+
+            var pbody = document.createElement('div') ;
+            pbody.setAttribute('id', 'collapse-'+id+'-'+idx);
+            pbody.setAttribute('class', 'panel-collapse collapse in');
+
+            var ppbody = document.createElement('div');
+            ppbody.setAttribute('class', 'panel-body');
+            ppbody.setAttribute('href', '#cbody-'+id+'-'+idx);
+            if (typeof pbdy == 'string') {
+                  ppbody.innerHTML = pbdy;
+			} else {
+                   ppbody.appendChild(pbdy);
+			 }
+			 pbody.appendChild(ppbody);
+
+            pgroup.appendChild(pbody);
+        }
+
+
+        return pgroup;
+	};
+
+
+    //Searchable List
+	this.searchList = function(id, listFunction, listArr) {
+       var slist = document.createElement('form');
+	    slist.setAttribute('id', id);
+	    var inpd = this.createElement('div', 'inp-'+id);
+	    inpd.setAttribute('class', 'form-group');
+	        var inpx = this.createElement('input', 'inptag-'+id);
+	        inpx.setAttribute('class', 'form-control');
+	        inpx.setAttribute('type', 'search');
+	        inpx.setAttribute('placeholder', 'Search..');
+        inpd.appendChild(inpx);
+
+        var srchlist = this.createElement('div', 'searchlist-'+id);
+        srchlist.setAttribute('class', 'listgroup');
+
+        //<a class="list-group-item" href="#"><span>aquamarine</span>
+        //<i style="background:aquamarine" class="badge">&nbsp;</i></a>
+        for (i=0; i < listArr.length; i++) {
+            var srobj = listArr[i];
+            var a = ui.createElement('a', 'snitem'+i);
+            if (srobj['class']) {
+                   a.setAttribute('class', 'list-group-item searchlist-item list-group-item-'+ srobj['class']);
+            } else {
+                   a.setAttribute('class', 'list-group-item searchlist-item');
+            }
+            if (listFunction) {
+                a.setAttribute('onclick', listFunction+'('+i+');');
+            }
+            var span = ui.createElement('span', 'snitem-text'+i);
+            span.innerHTML = srobj['content'];
+            a.appendChild(span);
+            srchlist.appendChild(a);
+        }
+
+	    slist.setAttribute('class', 'panel-group');
+	    slist.appendChild(inpd);
+        slist.appendChild(srchlist);
+
+
+        return slist;
+
+	}
 
 	
 	

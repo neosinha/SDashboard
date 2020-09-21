@@ -21,7 +21,6 @@ var Dashboard  = function () {
     /**
     **/
     this.sidebar = function( sidebars, idx) {
-
         var sbar = document.getElementById('sidebar');
         sbar.innerHTML = '';
         //bui.balert('BootObject');
